@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import random
 
 # Configuración de los parámetros
-N = 10000
+N = 3000
 d = 9
 
 # Creación de la simulación

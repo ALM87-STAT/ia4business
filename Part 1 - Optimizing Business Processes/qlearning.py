@@ -5,8 +5,8 @@
 import numpy as np
 
 # Configuración de los parámetros gamma y alpha para el algoritmo de Q-Learning
-gamma = 0.75
-alpha = 0.9
+gamma = 0.75 # Fector de descuento (0, 1)
+alpha = 0.9 # Ratio de aprendizaje (0, 1)
 
 # PARTE 1 - DEFINICIÓN DEL ENTORNO
 
@@ -81,9 +81,49 @@ def route(starting_location, ending_location):
 def best_route(starting_location, intermediary_location, ending_location):
     return route(starting_location, intermediary_location) + route(intermediary_location, ending_location)[1:]
 
-# Imprimir la ruta final
-print("Ruta Elegida:")
-print(best_route('E', 'B', 'G'))
+def permutation(lst): 
+  
+    # If lst is empty then there are no permutations 
+    if len(lst) == 0: 
+        return [] 
+  
+    # If there is only one element in lst then, only 
+    # one permuatation is possible 
+    if len(lst) == 1: 
+        return [lst] 
+  
+    # Find the permutations for lst if there are 
+    # more than 1 characters 
+  
+    l = [] # empty list that will store current permutation 
+    k = lst.pop(0)
+  
+    # Iterate the input(lst) and calculate the permutation 
+    for i in range(len(lst)): 
+       m = lst[i] 
+  
+       # Extract lst[i] or m from the list.  remLst is 
+       # remaining list 
+       remLst = lst[:i] + lst[i+1:] 
+  
+       # Generating all permutations where m is first 
+       # element 
+       for p in permutation(remLst): 
+           l.append([k] + [m] + p) 
+    return l 
+  
+  
+# Imprimir la ruta final más corta
+optimal = 1e3
+locatios = list(['A', 'D', 'I']) 
+for p in permutation(locatios): 
+    route_k = best_route(p[0], p[1], p[2])
+    if len(route_k) < optimal:
+        optimal_route = route_k
+        optimal = len(route_k)
+    
+print("Ruta óptima elegida:")
+print(optimal_route)
 
 
 
